@@ -1,0 +1,225 @@
+# from tvm.script import ir as I
+# from tvm.script import tirx as T
+# from tvm.tirx.layout import Axis
+# from tvm.script import relax as R
+
+@I.ir_module
+class Module:
+    @T.prim_func(private=True, s_tir=True)
+    def fused_conv2d1_add1_relu1(lv4: T.Buffer((T.int64(1), T.int64(16), T.int64(16), T.int64(16)), "float32"), param_0: T.Buffer((T.int64(32), T.int64(16), T.int64(3), T.int64(3)), "float32"), lv6: T.Buffer((T.int64(1), T.int64(32), T.int64(1), T.int64(1)), "float32"), compute_intermediate: T.Buffer((T.int64(1), T.int64(32), T.int64(16), T.int64(16)), "float32")):
+        T.func_attr({"tirx.noalias": True})
+        # with T.sblock("root"):
+        pad_temp = T.sblock_alloc_buffer((T.int64(1), T.int64(16), T.int64(18), T.int64(18)))
+        conv2d_nchw_intermediate = T.sblock_alloc_buffer((T.int64(1), T.int64(32), T.int64(16), T.int64(16)))
+        T_add_intermediate = T.sblock_alloc_buffer((T.int64(1), T.int64(32), T.int64(16), T.int64(16)))
+        for i0, i1, i2, i3 in T.grid(T.int64(1), T.int64(16), T.int64(18), T.int64(18)):
+            with T.sblock("pad_temp"):
+                v_i0, v_i1, v_i2, v_i3 = T.axis.remap("SSSS", [i0, i1, i2, i3])
+                T.reads(lv4[v_i0, v_i1, v_i2 - T.int64(1), v_i3 - T.int64(1)])
+                T.writes(pad_temp[v_i0, v_i1, v_i2, v_i3])
+                pad_temp[v_i0, v_i1, v_i2, v_i3] = T.if_then_else(T.int64(1) <= v_i2 and v_i2 < T.int64(17) and T.int64(1) <= v_i3 and v_i3 < T.int64(17), lv4[v_i0, v_i1, v_i2 - T.int64(1), v_i3 - T.int64(1)], T.float32(0.0))
+        for nn, ff, yy, xx, rc, ry, rx in T.grid(T.int64(1), T.int64(32), T.int64(16), T.int64(16), T.int64(16), T.int64(3), T.int64(3)):
+            with T.sblock("conv2d_nchw"):
+                v_nn, v_ff, v_yy, v_xx, v_rc, v_ry, v_rx = T.axis.remap("SSSSRRR", [nn, ff, yy, xx, rc, ry, rx])
+                T.reads(pad_temp[v_nn, v_rc, v_yy + v_ry, v_xx + v_rx], param_0[v_ff, v_rc, v_ry, v_rx])
+                T.writes(conv2d_nchw_intermediate[v_nn, v_ff, v_yy, v_xx])
+                with T.init():
+                    conv2d_nchw_intermediate[v_nn, v_ff, v_yy, v_xx] = T.float32(0.0)
+                conv2d_nchw_intermediate[v_nn, v_ff, v_yy, v_xx] = conv2d_nchw_intermediate[v_nn, v_ff, v_yy, v_xx] + pad_temp[v_nn, v_rc, v_yy + v_ry, v_xx + v_rx] * param_0[v_ff, v_rc, v_ry, v_rx]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(32), T.int64(16), T.int64(16)):
+            with T.sblock("T_add"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(conv2d_nchw_intermediate[v_ax0, v_ax1, v_ax2, v_ax3], lv6[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                T.writes(T_add_intermediate[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_add_intermediate[v_ax0, v_ax1, v_ax2, v_ax3] = conv2d_nchw_intermediate[v_ax0, v_ax1, v_ax2, v_ax3] + lv6[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+        for i0, i1, i2, i3 in T.grid(T.int64(1), T.int64(32), T.int64(16), T.int64(16)):
+            with T.sblock("compute"):
+                v_i0, v_i1, v_i2, v_i3 = T.axis.remap("SSSS", [i0, i1, i2, i3])
+                T.reads(T_add_intermediate[v_i0, v_i1, v_i2, v_i3])
+                T.writes(compute_intermediate[v_i0, v_i1, v_i2, v_i3])
+                compute_intermediate[v_i0, v_i1, v_i2, v_i3] = T.max(T_add_intermediate[v_i0, v_i1, v_i2, v_i3], T.float32(0.0))
+
+    @T.prim_func(private=True, s_tir=True)
+    def fused_conv2d_add_relu(input: T.Buffer((T.int64(1), T.int64(3), T.int64(32), T.int64(32)), "float32"), param_0: T.Buffer((T.int64(16), T.int64(3), T.int64(3), T.int64(3)), "float32"), lv1: T.Buffer((T.int64(1), T.int64(16), T.int64(1), T.int64(1)), "float32"), compute_intermediate: T.Buffer((T.int64(1), T.int64(16), T.int64(32), T.int64(32)), "float32")):
+        T.func_attr({"tirx.noalias": True})
+        # with T.sblock("root"):
+        pad_temp = T.sblock_alloc_buffer((T.int64(1), T.int64(3), T.int64(34), T.int64(34)))
+        conv2d_nchw_intermediate = T.sblock_alloc_buffer((T.int64(1), T.int64(16), T.int64(32), T.int64(32)))
+        T_add_intermediate = T.sblock_alloc_buffer((T.int64(1), T.int64(16), T.int64(32), T.int64(32)))
+        for i0, i1, i2, i3 in T.grid(T.int64(1), T.int64(3), T.int64(34), T.int64(34)):
+            with T.sblock("pad_temp"):
+                v_i0, v_i1, v_i2, v_i3 = T.axis.remap("SSSS", [i0, i1, i2, i3])
+                T.reads(input[v_i0, v_i1, v_i2 - T.int64(1), v_i3 - T.int64(1)])
+                T.writes(pad_temp[v_i0, v_i1, v_i2, v_i3])
+                pad_temp[v_i0, v_i1, v_i2, v_i3] = T.if_then_else(T.int64(1) <= v_i2 and v_i2 < T.int64(33) and T.int64(1) <= v_i3 and v_i3 < T.int64(33), input[v_i0, v_i1, v_i2 - T.int64(1), v_i3 - T.int64(1)], T.float32(0.0))
+        for nn, ff, yy, xx, rc, ry, rx in T.grid(T.int64(1), T.int64(16), T.int64(32), T.int64(32), T.int64(3), T.int64(3), T.int64(3)):
+            with T.sblock("conv2d_nchw"):
+                v_nn, v_ff, v_yy, v_xx, v_rc, v_ry, v_rx = T.axis.remap("SSSSRRR", [nn, ff, yy, xx, rc, ry, rx])
+                T.reads(pad_temp[v_nn, v_rc, v_yy + v_ry, v_xx + v_rx], param_0[v_ff, v_rc, v_ry, v_rx])
+                T.writes(conv2d_nchw_intermediate[v_nn, v_ff, v_yy, v_xx])
+                with T.init():
+                    conv2d_nchw_intermediate[v_nn, v_ff, v_yy, v_xx] = T.float32(0.0)
+                conv2d_nchw_intermediate[v_nn, v_ff, v_yy, v_xx] = conv2d_nchw_intermediate[v_nn, v_ff, v_yy, v_xx] + pad_temp[v_nn, v_rc, v_yy + v_ry, v_xx + v_rx] * param_0[v_ff, v_rc, v_ry, v_rx]
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(16), T.int64(32), T.int64(32)):
+            with T.sblock("T_add"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(conv2d_nchw_intermediate[v_ax0, v_ax1, v_ax2, v_ax3], lv1[v_ax0, v_ax1, T.int64(0), T.int64(0)])
+                T.writes(T_add_intermediate[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_add_intermediate[v_ax0, v_ax1, v_ax2, v_ax3] = conv2d_nchw_intermediate[v_ax0, v_ax1, v_ax2, v_ax3] + lv1[v_ax0, v_ax1, T.int64(0), T.int64(0)]
+        for i0, i1, i2, i3 in T.grid(T.int64(1), T.int64(16), T.int64(32), T.int64(32)):
+            with T.sblock("compute"):
+                v_i0, v_i1, v_i2, v_i3 = T.axis.remap("SSSS", [i0, i1, i2, i3])
+                T.reads(T_add_intermediate[v_i0, v_i1, v_i2, v_i3])
+                T.writes(compute_intermediate[v_i0, v_i1, v_i2, v_i3])
+                compute_intermediate[v_i0, v_i1, v_i2, v_i3] = T.max(T_add_intermediate[v_i0, v_i1, v_i2, v_i3], T.float32(0.0))
+
+    @T.prim_func(private=True, s_tir=True)
+    def fused_matmul1_add3(lv14: T.Buffer((T.int64(1), T.int64(64)), "float32"), lv15: T.Buffer((T.int64(64), T.int64(10)), "float32"), param_0: T.Buffer((T.int64(10),), "float32"), T_add_intermediate: T.Buffer((T.int64(1), T.int64(10)), "float32")):
+        T.func_attr({"tirx.noalias": True})
+        # with T.sblock("root"):
+        matmul_intermediate = T.sblock_alloc_buffer((T.int64(1), T.int64(10)))
+        for i0, i1, k in T.grid(T.int64(1), T.int64(10), T.int64(64)):
+            with T.sblock("matmul"):
+                v_i0, v_i1, v_k = T.axis.remap("SSR", [i0, i1, k])
+                T.reads(lv14[v_i0, v_k], lv15[v_k, v_i1])
+                T.writes(matmul_intermediate[v_i0, v_i1])
+                with T.init():
+                    matmul_intermediate[v_i0, v_i1] = T.float32(0.0)
+                matmul_intermediate[v_i0, v_i1] = matmul_intermediate[v_i0, v_i1] + lv14[v_i0, v_k] * lv15[v_k, v_i1]
+        for ax0, ax1 in T.grid(T.int64(1), T.int64(10)):
+            with T.sblock("T_add"):
+                v_ax0, v_ax1 = T.axis.remap("SS", [ax0, ax1])
+                T.reads(matmul_intermediate[v_ax0, v_ax1], param_0[v_ax1])
+                T.writes(T_add_intermediate[v_ax0, v_ax1])
+                T_add_intermediate[v_ax0, v_ax1] = matmul_intermediate[v_ax0, v_ax1] + param_0[v_ax1]
+
+    @T.prim_func(private=True, s_tir=True)
+    def fused_matmul_add2_relu2(lv10: T.Buffer((T.int64(1), T.int64(2048)), "float32"), lv11: T.Buffer((T.int64(2048), T.int64(64)), "float32"), param_0: T.Buffer((T.int64(64),), "float32"), compute_intermediate: T.Buffer((T.int64(1), T.int64(64)), "float32")):
+        T.func_attr({"tirx.noalias": True})
+        # with T.sblock("root"):
+        matmul_intermediate = T.sblock_alloc_buffer((T.int64(1), T.int64(64)))
+        T_add_intermediate = T.sblock_alloc_buffer((T.int64(1), T.int64(64)))
+        for i0, i1, k in T.grid(T.int64(1), T.int64(64), T.int64(2048)):
+            with T.sblock("matmul"):
+                v_i0, v_i1, v_k = T.axis.remap("SSR", [i0, i1, k])
+                T.reads(lv10[v_i0, v_k], lv11[v_k, v_i1])
+                T.writes(matmul_intermediate[v_i0, v_i1])
+                with T.init():
+                    matmul_intermediate[v_i0, v_i1] = T.float32(0.0)
+                matmul_intermediate[v_i0, v_i1] = matmul_intermediate[v_i0, v_i1] + lv10[v_i0, v_k] * lv11[v_k, v_i1]
+        for ax0, ax1 in T.grid(T.int64(1), T.int64(64)):
+            with T.sblock("T_add"):
+                v_ax0, v_ax1 = T.axis.remap("SS", [ax0, ax1])
+                T.reads(matmul_intermediate[v_ax0, v_ax1], param_0[v_ax1])
+                T.writes(T_add_intermediate[v_ax0, v_ax1])
+                T_add_intermediate[v_ax0, v_ax1] = matmul_intermediate[v_ax0, v_ax1] + param_0[v_ax1]
+        for i0, i1 in T.grid(T.int64(1), T.int64(64)):
+            with T.sblock("compute"):
+                v_i0, v_i1 = T.axis.remap("SS", [i0, i1])
+                T.reads(T_add_intermediate[v_i0, v_i1])
+                T.writes(compute_intermediate[v_i0, v_i1])
+                compute_intermediate[v_i0, v_i1] = T.max(T_add_intermediate[v_i0, v_i1], T.float32(0.0))
+
+    @T.prim_func(private=True, s_tir=True)
+    def max_pool2d(lv3: T.Buffer((T.int64(1), T.int64(16), T.int64(32), T.int64(32)), "float32"), pool_max: T.Buffer((T.int64(1), T.int64(16), T.int64(16), T.int64(16)), "float32")):
+        T.func_attr({"op_pattern": 4, "tirx.noalias": True})
+        # with T.sblock("root"):
+        for ax0, ax1, ax2, ax3, rv0, rv1 in T.grid(T.int64(1), T.int64(16), T.int64(16), T.int64(16), T.int64(2), T.int64(2)):
+            with T.sblock("pool_max"):
+                v_ax0, v_ax1, v_ax2, v_ax3, v_rv0, v_rv1 = T.axis.remap("SSSSRR", [ax0, ax1, ax2, ax3, rv0, rv1])
+                T.reads(lv3[v_ax0, v_ax1, v_ax2 * T.int64(2) + v_rv0, v_ax3 * T.int64(2) + v_rv1])
+                T.writes(pool_max[v_ax0, v_ax1, v_ax2, v_ax3])
+                T.sblock_attr({"schedule_rule": "meta_schedule.pool_max"})
+                with T.init():
+                    pool_max[v_ax0, v_ax1, v_ax2, v_ax3] = T.float32(-340282346638528859811704183484516925440.0)
+                pool_max[v_ax0, v_ax1, v_ax2, v_ax3] = T.max(pool_max[v_ax0, v_ax1, v_ax2, v_ax3], lv3[v_ax0, v_ax1, v_ax2 * T.int64(2) + v_rv0, v_ax3 * T.int64(2) + v_rv1])
+
+    @T.prim_func(private=True, s_tir=True)
+    def max_pool2d1(lv8: T.Buffer((T.int64(1), T.int64(32), T.int64(16), T.int64(16)), "float32"), pool_max: T.Buffer((T.int64(1), T.int64(32), T.int64(8), T.int64(8)), "float32")):
+        T.func_attr({"op_pattern": 4, "tirx.noalias": True})
+        # with T.sblock("root"):
+        for ax0, ax1, ax2, ax3, rv0, rv1 in T.grid(T.int64(1), T.int64(32), T.int64(8), T.int64(8), T.int64(2), T.int64(2)):
+            with T.sblock("pool_max"):
+                v_ax0, v_ax1, v_ax2, v_ax3, v_rv0, v_rv1 = T.axis.remap("SSSSRR", [ax0, ax1, ax2, ax3, rv0, rv1])
+                T.reads(lv8[v_ax0, v_ax1, v_ax2 * T.int64(2) + v_rv0, v_ax3 * T.int64(2) + v_rv1])
+                T.writes(pool_max[v_ax0, v_ax1, v_ax2, v_ax3])
+                T.sblock_attr({"schedule_rule": "meta_schedule.pool_max"})
+                with T.init():
+                    pool_max[v_ax0, v_ax1, v_ax2, v_ax3] = T.float32(-340282346638528859811704183484516925440.0)
+                pool_max[v_ax0, v_ax1, v_ax2, v_ax3] = T.max(pool_max[v_ax0, v_ax1, v_ax2, v_ax3], lv8[v_ax0, v_ax1, v_ax2 * T.int64(2) + v_rv0, v_ax3 * T.int64(2) + v_rv1])
+
+    @T.prim_func(private=True, s_tir=True)
+    def reshape(A: T.Buffer((T.int64(16),), "float32"), T_reshape: T.Buffer((T.int64(1), T.int64(16), T.int64(1), T.int64(1)), "float32")):
+        T.func_attr({"op_pattern": 2, "tirx.noalias": True})
+        # with T.sblock("root"):
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(16), T.int64(1), T.int64(1)):
+            with T.sblock("T_reshape"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(A[(v_ax1 + v_ax2 + v_ax3) % T.int64(16)])
+                T.writes(T_reshape[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_reshape[v_ax0, v_ax1, v_ax2, v_ax3] = A[(v_ax1 + v_ax2 + v_ax3) % T.int64(16)]
+
+    @T.prim_func(private=True, s_tir=True)
+    def reshape1(A: T.Buffer((T.int64(32),), "float32"), T_reshape: T.Buffer((T.int64(1), T.int64(32), T.int64(1), T.int64(1)), "float32")):
+        T.func_attr({"op_pattern": 2, "tirx.noalias": True})
+        # with T.sblock("root"):
+        for ax0, ax1, ax2, ax3 in T.grid(T.int64(1), T.int64(32), T.int64(1), T.int64(1)):
+            with T.sblock("T_reshape"):
+                v_ax0, v_ax1, v_ax2, v_ax3 = T.axis.remap("SSSS", [ax0, ax1, ax2, ax3])
+                T.reads(A[(v_ax1 + v_ax2 + v_ax3) % T.int64(32)])
+                T.writes(T_reshape[v_ax0, v_ax1, v_ax2, v_ax3])
+                T_reshape[v_ax0, v_ax1, v_ax2, v_ax3] = A[(v_ax1 + v_ax2 + v_ax3) % T.int64(32)]
+
+    @T.prim_func(private=True, s_tir=True)
+    def reshape2(lv9: T.Buffer((T.int64(1), T.int64(32), T.int64(8), T.int64(8)), "float32"), T_reshape: T.Buffer((T.int64(1), T.int64(2048)), "float32")):
+        T.func_attr({"op_pattern": 2, "tirx.noalias": True})
+        # with T.sblock("root"):
+        for ax0, ax1 in T.grid(T.int64(1), T.int64(2048)):
+            with T.sblock("T_reshape"):
+                v_ax0, v_ax1 = T.axis.remap("SS", [ax0, ax1])
+                T.reads(lv9[T.int64(0), v_ax1 % T.int64(2048) // T.int64(64), v_ax1 % T.int64(64) // T.int64(8), v_ax1 % T.int64(8)])
+                T.writes(T_reshape[v_ax0, v_ax1])
+                T_reshape[v_ax0, v_ax1] = lv9[T.int64(0), v_ax1 % T.int64(2048) // T.int64(64), v_ax1 % T.int64(64) // T.int64(8), v_ax1 % T.int64(8)]
+
+    @T.prim_func(private=True, s_tir=True)
+    def transpose(A: T.Buffer((T.int64(64), T.int64(2048)), "float32"), T_transpose: T.Buffer((T.int64(2048), T.int64(64)), "float32")):
+        T.func_attr({"op_pattern": 2, "tirx.noalias": True})
+        # with T.sblock("root"):
+        for ax0, ax1 in T.grid(T.int64(2048), T.int64(64)):
+            with T.sblock("T_transpose"):
+                v_ax0, v_ax1 = T.axis.remap("SS", [ax0, ax1])
+                T.reads(A[v_ax1, v_ax0])
+                T.writes(T_transpose[v_ax0, v_ax1])
+                T_transpose[v_ax0, v_ax1] = A[v_ax1, v_ax0]
+
+    @T.prim_func(private=True, s_tir=True)
+    def transpose1(A: T.Buffer((T.int64(10), T.int64(64)), "float32"), T_transpose: T.Buffer((T.int64(64), T.int64(10)), "float32")):
+        T.func_attr({"op_pattern": 2, "tirx.noalias": True})
+        # with T.sblock("root"):
+        for ax0, ax1 in T.grid(T.int64(64), T.int64(10)):
+            with T.sblock("T_transpose"):
+                v_ax0, v_ax1 = T.axis.remap("SS", [ax0, ax1])
+                T.reads(A[v_ax1, v_ax0])
+                T.writes(T_transpose[v_ax0, v_ax1])
+                T_transpose[v_ax0, v_ax1] = A[v_ax1, v_ax0]
+
+    @R.function
+    def main(input: R.Tensor((1, 3, 32, 32), dtype="float32")) -> R.Tensor((1, 10), dtype="float32"):
+        R.func_attr({"num_input": 1})
+        cls = Module
+        with R.dataflow():
+            lv1 = R.call_tir(cls.reshape, (metadata["relax.expr.Constant"][0],), out_ty=R.Tensor((1, 16, 1, 1), dtype="float32"))
+            lv = R.call_tir(cls.fused_conv2d_add_relu, (input, metadata["relax.expr.Constant"][1], lv1), out_ty=R.Tensor((1, 16, 32, 32), dtype="float32"))
+            lv4 = R.call_tir(cls.max_pool2d, (lv,), out_ty=R.Tensor((1, 16, 16, 16), dtype="float32"))
+            lv6 = R.call_tir(cls.reshape1, (metadata["relax.expr.Constant"][2],), out_ty=R.Tensor((1, 32, 1, 1), dtype="float32"))
+            lv1_1 = R.call_tir(cls.fused_conv2d1_add1_relu1, (lv4, metadata["relax.expr.Constant"][3], lv6), out_ty=R.Tensor((1, 32, 16, 16), dtype="float32"))
+            lv9 = R.call_tir(cls.max_pool2d1, (lv1_1,), out_ty=R.Tensor((1, 32, 8, 8), dtype="float32"))
+            lv10 = R.call_tir(cls.reshape2, (lv9,), out_ty=R.Tensor((1, 2048), dtype="float32"))
+            lv11 = R.call_tir(cls.transpose, (metadata["relax.expr.Constant"][4],), out_ty=R.Tensor((2048, 64), dtype="float32"))
+            lv2 = R.call_tir(cls.fused_matmul_add2_relu2, (lv10, lv11, metadata["relax.expr.Constant"][5]), out_ty=R.Tensor((1, 64), dtype="float32"))
+            lv15 = R.call_tir(cls.transpose1, (metadata["relax.expr.Constant"][6],), out_ty=R.Tensor((64, 10), dtype="float32"))
+            gv = R.call_tir(cls.fused_matmul1_add3, (lv2, lv15, metadata["relax.expr.Constant"][7]), out_ty=R.Tensor((1, 10), dtype="float32"))
+            R.output(gv)
+        return gv
+
+# Metadata omitted. Use show_meta=True in script() method to show it.

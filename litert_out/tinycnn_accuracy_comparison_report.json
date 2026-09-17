@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "source_label": "flatbuffer_direct",
+  "seed": 0,
+  "num_samples": 1,
+  "rtol": 0.0001,
+  "atol": 0.0001,
+  "inputs_source": "seeded_random",
+  "onnx_tflite": {
+    "report_path": "litert_out/tinycnn_accuracy_report.json",
+    "target_key": "float32",
+    "evaluation_pass": true,
+    "overall_metrics": {
+      "max_abs": 6.332993507385254e-08,
+      "ref_max_abs": 0.15468503534793854,
+      "ref_rms": 0.08650843110835707,
+      "mean_abs": 2.6822090148925782e-08,
+      "rmse": 3.3361633386072684e-08,
+      "cosine_similarity": 0.9999999999999305
+    }
+  },
+  "onnx_pytorch": null,
+  "tflite_pytorch": null,
+  "reference_backend": "onnx",
+  "pytorch_backend": null
+}

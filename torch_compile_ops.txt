@@ -1,0 +1,12 @@
+<built-in method conv2d of type object at 0x1038a0cf0>
+<function batch_norm at 0x105f7d6c0>
+<function relu at 0x105f7c680>
+<function boolean_dispatch.<locals>.fn at 0x105f732e0>
+<built-in method conv2d of type object at 0x1038a0cf0>
+<function batch_norm at 0x105f7d6c0>
+<function relu at 0x105f7c680>
+<function boolean_dispatch.<locals>.fn at 0x105f732e0>
+<built-in method flatten of type object at 0x1038a0cf0>
+<built-in function linear>
+<function relu at 0x105f7c680>
+<built-in function linear>

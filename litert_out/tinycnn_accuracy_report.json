@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "seed": 0,
+  "num_samples": 1,
+  "rtol": 0.0001,
+  "atol": 0.0001,
+  "compare_mode": "raw",
+  "has_quantized_outputs": false,
+  "inputs_source": "seeded_random",
+  "onnx_input_names": [
+    "input"
+  ],
+  "onnx_output_names": [
+    "output"
+  ],
+  "compared_output_names": [
+    "output"
+  ],
+  "skipped_output_names": [],
+  "skipped_output_reasons": {},
+  "tflite_path": "litert_out/tinycnn_float32.tflite",
+  "metric_thresholds": {
+    "max_abs": 0.05,
+    "mean_abs": 0.005,
+    "rmse": 0.006,
+    "cosine_similarity": 0.999
+  },
+  "overall_metrics": {
+    "max_abs": 6.332993507385254e-08,
+    "ref_max_abs": 0.15468503534793854,
+    "ref_rms": 0.08650843110835707,
+    "mean_abs": 2.6822090148925782e-08,
+    "rmse": 3.3361633386072684e-08,
+    "cosine_similarity": 0.9999999999999305
+  },
+  "metric_threshold_judgement": {
+    "pass": true,
+    "checks": {
+      "max_abs": true,
+      "mean_abs": true,
+      "rmse": true,
+      "cosine_similarity": true
+    },
+    "effective_thresholds": {
+      "max_abs": 0.05,
+      "mean_abs": 0.005,
+      "rmse": 0.006,
+      "cosine_similarity": 0.999
+    },
+    "cosine_similarity_bypassed_for_low_energy": false
+  },
+  "allclose_summary": {
+    "matched": 1,
+    "total": 1,
+    "pass": true
+  },
+  "layout_alignment_summary": {
+    "identity": 1,
+    "transpose": 0,
+    "reshape": 0
+  },
+  "evaluation_pass": true,
+  "per_output_metrics": {
+    "output": {
+      "tflite_output_name": "output",
+      "status": "compared",
+      "reason": "",
+      "allclose": {
+        "matched": 1,
+        "total": 1,
+        "pass": true
+      },
+      "metric_threshold_judgement": {
+        "pass": true,
+        "checks": {
+          "max_abs": true,
+          "mean_abs": true,
+          "rmse": true,
+          "cosine_similarity": true
+        },
+        "effective_thresholds": {
+          "max_abs": 0.05,
+          "mean_abs": 0.005,
+          "rmse": 0.006,
+          "cosine_similarity": 0.999
+        },
+        "cosine_similarity_bypassed_for_low_energy": false
+      },
+      "layout_alignment": {
+        "identity": 1,
+        "transpose": 0,
+        "reshape": 0,
+        "permutation_counts": {}
+      },
+      "max_abs": 6.332993507385254e-08,
+      "ref_max_abs": 0.15468503534793854,
+      "ref_rms": 0.08650843110835707,
+      "mean_abs": 2.6822090148925782e-08,
+      "rmse": 3.3361633386072684e-08,
+      "cosine_similarity": 0.9999999999999305
+    }
+  }
+}

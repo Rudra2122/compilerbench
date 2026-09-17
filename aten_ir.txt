@@ -1,0 +1,20 @@
+
+
+
+def forward(self, p_conv1_weight, p_conv1_bias, p_bn1_weight, p_bn1_bias, p_conv2_weight, p_conv2_bias, p_bn2_weight, p_bn2_bias, p_fc1_weight, p_fc1_bias, p_fc2_weight, p_fc2_bias, b_bn1_running_mean, b_bn1_running_var, b_bn1_num_batches_tracked, b_bn2_running_mean, b_bn2_running_var, b_bn2_num_batches_tracked, x):
+    conv2d = torch.ops.aten.conv2d.default(x, p_conv1_weight, p_conv1_bias, [1, 1], [1, 1]);  x = p_conv1_weight = p_conv1_bias = None
+    _native_batch_norm_legit_no_training = torch.ops.aten._native_batch_norm_legit_no_training.default(conv2d, p_bn1_weight, p_bn1_bias, b_bn1_running_mean, b_bn1_running_var, 0.1, 1e-05);  conv2d = p_bn1_weight = p_bn1_bias = b_bn1_running_mean = b_bn1_running_var = None
+    getitem = _native_batch_norm_legit_no_training[0];  _native_batch_norm_legit_no_training = None
+    relu = torch.ops.aten.relu.default(getitem);  getitem = None
+    max_pool2d = torch.ops.aten.max_pool2d.default(relu, [2, 2], [2, 2]);  relu = None
+    conv2d_1 = torch.ops.aten.conv2d.default(max_pool2d, p_conv2_weight, p_conv2_bias, [1, 1], [1, 1]);  max_pool2d = p_conv2_weight = p_conv2_bias = None
+    _native_batch_norm_legit_no_training_1 = torch.ops.aten._native_batch_norm_legit_no_training.default(conv2d_1, p_bn2_weight, p_bn2_bias, b_bn2_running_mean, b_bn2_running_var, 0.1, 1e-05);  conv2d_1 = p_bn2_weight = p_bn2_bias = b_bn2_running_mean = b_bn2_running_var = None
+    getitem_3 = _native_batch_norm_legit_no_training_1[0];  _native_batch_norm_legit_no_training_1 = None
+    relu_1 = torch.ops.aten.relu.default(getitem_3);  getitem_3 = None
+    max_pool2d_1 = torch.ops.aten.max_pool2d.default(relu_1, [2, 2], [2, 2]);  relu_1 = None
+    view = torch.ops.aten.view.default(max_pool2d_1, [1, 2048]);  max_pool2d_1 = None
+    linear = torch.ops.aten.linear.default(view, p_fc1_weight, p_fc1_bias);  view = p_fc1_weight = p_fc1_bias = None
+    relu_2 = torch.ops.aten.relu.default(linear);  linear = None
+    linear_1 = torch.ops.aten.linear.default(relu_2, p_fc2_weight, p_fc2_bias);  relu_2 = p_fc2_weight = p_fc2_bias = None
+    return (linear_1,)
+    

@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+tinycnn_weights.pt
+report_dynamo_export.sarif
+litert_out/*tensor_correspondence_report.json
+litert_out/*op_error_report.csv

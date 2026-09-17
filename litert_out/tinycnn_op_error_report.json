@@ -1,0 +1,706 @@
+{
+  "schema_version": 1,
+  "onnx_path": "/var/folders/zj/8fnl8j6j7s73tqw99r9fl2r00000gn/T/tmp4jx3b4k3.onnx",
+  "tflite_path": "litert_out/tinycnn_float32.tflite",
+  "rtol": 0.0,
+  "atol": 0.0001,
+  "summary": {
+    "total_targets": 10,
+    "inferable_targets": 10,
+    "matchable_inferable_targets": 9,
+    "compared_count": 9,
+    "skipped_count": 1,
+    "skipped_nondeterministic_count": 0,
+    "allclose_pass_count": 7
+  },
+  "top_errors": [
+    {
+      "identifier": 1,
+      "onnx_op_name": "wa/conv1/Conv",
+      "onnx_op_type": "Conv",
+      "tensor_name": "wa/conv1/Conv_output_0",
+      "tflite_tensor_name": "wa/pool/MaxPool_input_nhwc",
+      "mapped_tflite_tensor_name": "wa/pool/MaxPool_input_nhwc",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        32,
+        32,
+        16
+      ],
+      "tflite_shape_raw": [
+        1,
+        32,
+        32,
+        16
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": false,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 2.5577914714813232,
+      "mean_abs": 0.21782334335969722,
+      "rmse": 0.3944433563639073,
+      "cosine_similarity": 0.7323855950740846,
+      "onnx_shape_for_compare": [
+        1,
+        32,
+        32,
+        16
+      ],
+      "layout_hint_applied": true
+    },
+    {
+      "identifier": 4,
+      "onnx_op_name": "wa/conv2/Conv",
+      "onnx_op_type": "Conv",
+      "tensor_name": "wa/conv2/Conv_output_0",
+      "tflite_tensor_name": "wa/pool_1/MaxPool_input_nhwc",
+      "mapped_tflite_tensor_name": "wa/pool_1/MaxPool_input_nhwc",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        16,
+        16,
+        32
+      ],
+      "tflite_shape_raw": [
+        1,
+        16,
+        16,
+        32
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": false,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 1.6871345043182373,
+      "mean_abs": 0.1692482225205012,
+      "rmse": 0.3189600676661219,
+      "cosine_similarity": 0.6665935124117329,
+      "onnx_shape_for_compare": [
+        1,
+        16,
+        16,
+        32
+      ],
+      "layout_hint_applied": true
+    },
+    {
+      "identifier": 5,
+      "onnx_op_name": "wa/relu_1/Relu",
+      "onnx_op_type": "Relu",
+      "tensor_name": "wa/relu_1/Relu_output_0",
+      "tflite_tensor_name": "wa/pool_1/MaxPool_input_nhwc",
+      "mapped_tflite_tensor_name": "wa/pool_1/MaxPool_input_nhwc",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        16,
+        16,
+        32
+      ],
+      "tflite_shape_raw": [
+        1,
+        16,
+        16,
+        32
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 5.960464477539062e-07,
+      "mean_abs": 4.328160230215872e-08,
+      "rmse": 8.228405461062986e-08,
+      "cosine_similarity": 0.9999999999999589,
+      "onnx_shape_for_compare": [
+        1,
+        16,
+        16,
+        32
+      ],
+      "layout_hint_applied": true
+    },
+    {
+      "identifier": 6,
+      "onnx_op_name": "wa/pool_1/MaxPool",
+      "onnx_op_type": "MaxPool",
+      "tensor_name": "wa/pool_1/MaxPool_output_0",
+      "tflite_tensor_name": "wa/pool_1/MaxPool_output_0",
+      "mapped_tflite_tensor_name": "wa/pool_1/MaxPool_output_0",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        32,
+        8,
+        8
+      ],
+      "tflite_shape_raw": [
+        1,
+        32,
+        8,
+        8
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 5.960464477539062e-07,
+      "mean_abs": 6.968821253394708e-08,
+      "rmse": 1.1062723144652932e-07,
+      "cosine_similarity": 0.9999999999999636,
+      "onnx_shape_for_compare": [
+        1,
+        32,
+        8,
+        8
+      ],
+      "layout_hint_applied": false
+    },
+    {
+      "identifier": 7,
+      "onnx_op_name": "wa/Flatten",
+      "onnx_op_type": "Flatten",
+      "tensor_name": "wa/Flatten_output_0",
+      "tflite_tensor_name": "wa/Flatten_output_0",
+      "mapped_tflite_tensor_name": "wa/Flatten_output_0",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        2048
+      ],
+      "tflite_shape_raw": [
+        1,
+        2048
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 5.960464477539062e-07,
+      "mean_abs": 6.968821253394708e-08,
+      "rmse": 1.1062723144652932e-07,
+      "cosine_similarity": 0.9999999999999636,
+      "onnx_shape_for_compare": [
+        1,
+        2048
+      ],
+      "layout_hint_applied": false
+    },
+    {
+      "identifier": 2,
+      "onnx_op_name": "wa/relu/Relu",
+      "onnx_op_type": "Relu",
+      "tensor_name": "wa/relu/Relu_output_0",
+      "tflite_tensor_name": "wa/pool/MaxPool_input_nhwc",
+      "mapped_tflite_tensor_name": "wa/pool/MaxPool_input_nhwc",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        32,
+        32,
+        16
+      ],
+      "tflite_shape_raw": [
+        1,
+        32,
+        32,
+        16
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 4.76837158203125e-07,
+      "mean_abs": 2.2678307232126826e-08,
+      "rmse": 4.784069500386153e-08,
+      "cosine_similarity": 0.999999999999994,
+      "onnx_shape_for_compare": [
+        1,
+        32,
+        32,
+        16
+      ],
+      "layout_hint_applied": true
+    },
+    {
+      "identifier": 8,
+      "onnx_op_name": "wa/fc1/Gemm",
+      "onnx_op_type": "Gemm",
+      "tensor_name": "wa/fc1/Gemm_output_0",
+      "tflite_tensor_name": "wa/fc1/Gemm_output_0",
+      "mapped_tflite_tensor_name": "wa/fc1/Gemm_output_0",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        64
+      ],
+      "tflite_shape_raw": [
+        1,
+        64
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 2.682209014892578e-07,
+      "mean_abs": 8.188362699002028e-08,
+      "rmse": 1.061398461817718e-07,
+      "cosine_similarity": 0.9999999999998295,
+      "onnx_shape_for_compare": [
+        1,
+        64
+      ],
+      "layout_hint_applied": false
+    },
+    {
+      "identifier": 9,
+      "onnx_op_name": "wa/relu_2/Relu",
+      "onnx_op_type": "Relu",
+      "tensor_name": "wa/relu_2/Relu_output_0",
+      "tflite_tensor_name": "wa/relu_2/Relu_output_0",
+      "mapped_tflite_tensor_name": "wa/relu_2/Relu_output_0",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        64
+      ],
+      "tflite_shape_raw": [
+        1,
+        64
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 2.682209014892578e-07,
+      "mean_abs": 4.631874617189169e-08,
+      "rmse": 8.368338703666887e-08,
+      "cosine_similarity": 0.9999999999998239,
+      "onnx_shape_for_compare": [
+        1,
+        64
+      ],
+      "layout_hint_applied": false
+    },
+    {
+      "identifier": 10,
+      "onnx_op_name": "wa/fc2/Gemm",
+      "onnx_op_type": "Gemm",
+      "tensor_name": "output",
+      "tflite_tensor_name": "output",
+      "mapped_tflite_tensor_name": "output",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        10
+      ],
+      "tflite_shape_raw": [
+        1,
+        10
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 8.940696716308594e-08,
+      "mean_abs": 5.513429641723633e-08,
+      "rmse": 5.807152862891516e-08,
+      "cosine_similarity": 0.9999999999998694,
+      "onnx_shape_for_compare": [
+        1,
+        10
+      ],
+      "layout_hint_applied": false
+    }
+  ],
+  "records": [
+    {
+      "identifier": 1,
+      "onnx_op_name": "wa/conv1/Conv",
+      "onnx_op_type": "Conv",
+      "tensor_name": "wa/conv1/Conv_output_0",
+      "tflite_tensor_name": "wa/pool/MaxPool_input_nhwc",
+      "mapped_tflite_tensor_name": "wa/pool/MaxPool_input_nhwc",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        32,
+        32,
+        16
+      ],
+      "tflite_shape_raw": [
+        1,
+        32,
+        32,
+        16
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": false,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 2.5577914714813232,
+      "mean_abs": 0.21782334335969722,
+      "rmse": 0.3944433563639073,
+      "cosine_similarity": 0.7323855950740846,
+      "onnx_shape_for_compare": [
+        1,
+        32,
+        32,
+        16
+      ],
+      "layout_hint_applied": true,
+      "rank": 1
+    },
+    {
+      "identifier": 4,
+      "onnx_op_name": "wa/conv2/Conv",
+      "onnx_op_type": "Conv",
+      "tensor_name": "wa/conv2/Conv_output_0",
+      "tflite_tensor_name": "wa/pool_1/MaxPool_input_nhwc",
+      "mapped_tflite_tensor_name": "wa/pool_1/MaxPool_input_nhwc",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        16,
+        16,
+        32
+      ],
+      "tflite_shape_raw": [
+        1,
+        16,
+        16,
+        32
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": false,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 1.6871345043182373,
+      "mean_abs": 0.1692482225205012,
+      "rmse": 0.3189600676661219,
+      "cosine_similarity": 0.6665935124117329,
+      "onnx_shape_for_compare": [
+        1,
+        16,
+        16,
+        32
+      ],
+      "layout_hint_applied": true,
+      "rank": 2
+    },
+    {
+      "identifier": 5,
+      "onnx_op_name": "wa/relu_1/Relu",
+      "onnx_op_type": "Relu",
+      "tensor_name": "wa/relu_1/Relu_output_0",
+      "tflite_tensor_name": "wa/pool_1/MaxPool_input_nhwc",
+      "mapped_tflite_tensor_name": "wa/pool_1/MaxPool_input_nhwc",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        16,
+        16,
+        32
+      ],
+      "tflite_shape_raw": [
+        1,
+        16,
+        16,
+        32
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 5.960464477539062e-07,
+      "mean_abs": 4.328160230215872e-08,
+      "rmse": 8.228405461062986e-08,
+      "cosine_similarity": 0.9999999999999589,
+      "onnx_shape_for_compare": [
+        1,
+        16,
+        16,
+        32
+      ],
+      "layout_hint_applied": true,
+      "rank": 3
+    },
+    {
+      "identifier": 6,
+      "onnx_op_name": "wa/pool_1/MaxPool",
+      "onnx_op_type": "MaxPool",
+      "tensor_name": "wa/pool_1/MaxPool_output_0",
+      "tflite_tensor_name": "wa/pool_1/MaxPool_output_0",
+      "mapped_tflite_tensor_name": "wa/pool_1/MaxPool_output_0",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        32,
+        8,
+        8
+      ],
+      "tflite_shape_raw": [
+        1,
+        32,
+        8,
+        8
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 5.960464477539062e-07,
+      "mean_abs": 6.968821253394708e-08,
+      "rmse": 1.1062723144652932e-07,
+      "cosine_similarity": 0.9999999999999636,
+      "onnx_shape_for_compare": [
+        1,
+        32,
+        8,
+        8
+      ],
+      "layout_hint_applied": false,
+      "rank": 4
+    },
+    {
+      "identifier": 7,
+      "onnx_op_name": "wa/Flatten",
+      "onnx_op_type": "Flatten",
+      "tensor_name": "wa/Flatten_output_0",
+      "tflite_tensor_name": "wa/Flatten_output_0",
+      "mapped_tflite_tensor_name": "wa/Flatten_output_0",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        2048
+      ],
+      "tflite_shape_raw": [
+        1,
+        2048
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 5.960464477539062e-07,
+      "mean_abs": 6.968821253394708e-08,
+      "rmse": 1.1062723144652932e-07,
+      "cosine_similarity": 0.9999999999999636,
+      "onnx_shape_for_compare": [
+        1,
+        2048
+      ],
+      "layout_hint_applied": false,
+      "rank": 5
+    },
+    {
+      "identifier": 2,
+      "onnx_op_name": "wa/relu/Relu",
+      "onnx_op_type": "Relu",
+      "tensor_name": "wa/relu/Relu_output_0",
+      "tflite_tensor_name": "wa/pool/MaxPool_input_nhwc",
+      "mapped_tflite_tensor_name": "wa/pool/MaxPool_input_nhwc",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        32,
+        32,
+        16
+      ],
+      "tflite_shape_raw": [
+        1,
+        32,
+        32,
+        16
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 4.76837158203125e-07,
+      "mean_abs": 2.2678307232126826e-08,
+      "rmse": 4.784069500386153e-08,
+      "cosine_similarity": 0.999999999999994,
+      "onnx_shape_for_compare": [
+        1,
+        32,
+        32,
+        16
+      ],
+      "layout_hint_applied": true,
+      "rank": 6
+    },
+    {
+      "identifier": 8,
+      "onnx_op_name": "wa/fc1/Gemm",
+      "onnx_op_type": "Gemm",
+      "tensor_name": "wa/fc1/Gemm_output_0",
+      "tflite_tensor_name": "wa/fc1/Gemm_output_0",
+      "mapped_tflite_tensor_name": "wa/fc1/Gemm_output_0",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        64
+      ],
+      "tflite_shape_raw": [
+        1,
+        64
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 2.682209014892578e-07,
+      "mean_abs": 8.188362699002028e-08,
+      "rmse": 1.061398461817718e-07,
+      "cosine_similarity": 0.9999999999998295,
+      "onnx_shape_for_compare": [
+        1,
+        64
+      ],
+      "layout_hint_applied": false,
+      "rank": 7
+    },
+    {
+      "identifier": 9,
+      "onnx_op_name": "wa/relu_2/Relu",
+      "onnx_op_type": "Relu",
+      "tensor_name": "wa/relu_2/Relu_output_0",
+      "tflite_tensor_name": "wa/relu_2/Relu_output_0",
+      "mapped_tflite_tensor_name": "wa/relu_2/Relu_output_0",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        64
+      ],
+      "tflite_shape_raw": [
+        1,
+        64
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 2.682209014892578e-07,
+      "mean_abs": 4.631874617189169e-08,
+      "rmse": 8.368338703666887e-08,
+      "cosine_similarity": 0.9999999999998239,
+      "onnx_shape_for_compare": [
+        1,
+        64
+      ],
+      "layout_hint_applied": false,
+      "rank": 8
+    },
+    {
+      "identifier": 10,
+      "onnx_op_name": "wa/fc2/Gemm",
+      "onnx_op_type": "Gemm",
+      "tensor_name": "output",
+      "tflite_tensor_name": "output",
+      "mapped_tflite_tensor_name": "output",
+      "mapping_source": "tensor_correspondence_report",
+      "status": "compared",
+      "reason": "",
+      "onnx_shape": [
+        1,
+        10
+      ],
+      "tflite_shape_raw": [
+        1,
+        10
+      ],
+      "onnx_dtype": "float32",
+      "tflite_dtype_raw": "float32",
+      "allclose": true,
+      "alignment_mode": "identity",
+      "alignment_perm": [],
+      "max_abs": 8.940696716308594e-08,
+      "mean_abs": 5.513429641723633e-08,
+      "rmse": 5.807152862891516e-08,
+      "cosine_similarity": 0.9999999999998694,
+      "onnx_shape_for_compare": [
+        1,
+        10
+      ],
+      "layout_hint_applied": false,
+      "rank": 9
+    },
+    {
+      "identifier": 3,
+      "onnx_op_name": "wa/pool/MaxPool",
+      "onnx_op_type": "MaxPool",
+      "tensor_name": "wa/pool/MaxPool_output_0",
+      "tflite_tensor_name": "",
+      "mapped_tflite_tensor_name": "",
+      "mapping_source": "",
+      "status": "skipped",
+      "reason": "no_matching_tflite_tensor",
+      "onnx_shape": null,
+      "tflite_shape_raw": null,
+      "onnx_dtype": "",
+      "tflite_dtype_raw": "",
+      "allclose": null,
+      "alignment_mode": "",
+      "alignment_perm": [],
+      "max_abs": null,
+      "mean_abs": null,
+      "rmse": null,
+      "cosine_similarity": null,
+      "rank": ""
+    }
+  ]
+}
