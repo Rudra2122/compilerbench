@@ -1,0 +1,45 @@
+{
+  "env": {
+    "machine": "arm64",
+    "system": "Darwin 27.0.0",
+    "processor": "arm",
+    "python": "3.11.14",
+    "cpu_count": 8,
+    "smoke": false,
+    "torch": "2.14.0",
+    "torchvision": "0.29.0",
+    "onnx": "1.23.0",
+    "onnxruntime": "1.30.0",
+    "executorch": "1.5.1",
+    "torchao": "0.18.0",
+    "qai_hub": "0.56.0",
+    "chip": "Apple M3"
+  },
+  "model": "torchvision mobilenet_v2 IMAGENET1K_V1",
+  "torch_fp32": {
+    "n": 3925,
+    "top1": 79.03184713375796,
+    "latency": {
+      "p50_ms": 16.048,
+      "p90_ms": 16.187,
+      "mean_ms": 16.091,
+      "min_ms": 15.953,
+      "iters": 100
+    }
+  },
+  "onnx_fp32": {
+    "n": 3925,
+    "top1": 79.03184713375796,
+    "top1_agreement_vs_fp32": 100.0,
+    "logit_max_abs_diff": 5.525350570678711e-05,
+    "logit_mean_abs_diff": 2.987103016494075e-06,
+    "ops": {
+      "Conv": 52,
+      "Clip": 35,
+      "Add": 10,
+      "ReduceMean": 1,
+      "Reshape": 1,
+      "Gemm": 1
+    }
+  }
+}

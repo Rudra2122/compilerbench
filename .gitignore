@@ -1,7 +1,16 @@
 __pycache__/
 *.pyc
 .DS_Store
-tinycnn_weights.pt
-report_dynamo_export.sarif
-litert_out/*tensor_correspondence_report.json
-litert_out/*op_error_report.csv
+.venv/
+
+# v2: large / regenerable
+data/
+artifacts/
+results/smoke_*
+results/SMOKE_RESULTS.md
+
+# v1
+v1_tinycnn/tinycnn_weights.pt
+v1_tinycnn/report_dynamo_export.sarif
+v1_tinycnn/litert_out/*tensor_correspondence_report.json
+v1_tinycnn/litert_out/*op_error_report.csv

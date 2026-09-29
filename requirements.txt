@@ -1,18 +1,13 @@
-ai-edge-litert==2.1.2
-apache-tvm==0.26.0
-apache-tvm-ffi==0.1.14.post0
-executorch==0.3.0
-onnx==1.20.1
-onnx-ir==1.0.0
-onnx2tf==2.6.9
-onnxoptimizer==0.4.2
-onnxruntime==1.26.0
-onnxscript==0.6.2
-onnxsim==0.6.5
-pytorch_tokenizers==1.5.0
-sne4onnx==2.0.1
-sng4onnx==2.0.1
-tensorflow==2.21.0
-torch==2.4.1
+# v2 pipeline (MobileNetV2). Tested on Python 3.11; all pins have macOS arm64 wheels.
+# The v1 TinyCNN pipeline (TVM, onnx2tf, LiteRT) has its own pins in v1_tinycnn/requirements-v1.txt.
+# ExecuTorch releases are built against one torch version. Change torch and executorch together.
+torch==2.14.0
+torchvision==0.29.0
 torchao==0.18.0
-torchvision==0.23.0
+executorch==1.5.1
+onnx==1.23.0
+onnxscript==0.7.2
+onnxruntime==1.30.0
+numpy==2.4.6
+pillow==12.3.0
+qai-hub==0.56.0

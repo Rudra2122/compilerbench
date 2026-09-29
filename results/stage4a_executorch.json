@@ -1,0 +1,114 @@
+{
+  "env": {
+    "machine": "arm64",
+    "system": "Darwin 27.0.0",
+    "processor": "arm",
+    "python": "3.11.14",
+    "cpu_count": 8,
+    "smoke": false,
+    "torch": "2.14.0",
+    "torchvision": "0.29.0",
+    "onnx": "1.23.0",
+    "onnxruntime": "1.30.0",
+    "executorch": "1.5.1",
+    "torchao": "0.18.0",
+    "qai_hub": "0.56.0",
+    "chip": "Apple M3"
+  },
+  "threadpool_threads": 4,
+  "variants": {
+    "portable_fp32": {
+      "n": 100,
+      "top1": 75.0,
+      "top1_agreement_vs_fp32": 100.0,
+      "logit_max_abs_diff": 6.103515625e-05,
+      "logit_mean_abs_diff": 2.6697296107158763e-06,
+      "size_bytes": 14235952,
+      "latency": {
+        "p50_ms": 416.369,
+        "p90_ms": 417.459,
+        "mean_ms": 416.628,
+        "min_ms": 414.469,
+        "iters": 20
+      },
+      "delegation": {
+        "num_delegated_subgraphs": 0,
+        "delegated_ops": 0,
+        "non_delegated_ops": 205,
+        "fallback_op_types": {
+          "aten__native_batch_norm_legit_no_training_default": 52,
+          "aten_add_tensor": 10,
+          "aten_addmm_default": 1,
+          "aten_convolution_default": 52,
+          "aten_hardtanh_default": 35,
+          "aten_mean_dim": 1,
+          "aten_permute_copy_default": 1,
+          "aten_view_copy_default": 1
+        }
+      },
+      "lowering_vs_own_ref": {
+        "n": 100,
+        "max_abs_diff": 6.103515625e-05,
+        "mean_abs_diff": 2.6697296107158763e-06,
+        "top1_agreement_pct": 100.0
+      },
+      "speedup_vs_portable": 1.0
+    },
+    "xnnpack_fp32": {
+      "n": 3925,
+      "top1": 79.03184713375796,
+      "top1_agreement_vs_fp32": 100.0,
+      "logit_max_abs_diff": 6.29425048828125e-05,
+      "logit_mean_abs_diff": 3.903131073457189e-06,
+      "size_bytes": 13994144,
+      "latency": {
+        "p50_ms": 2.517,
+        "p90_ms": 2.576,
+        "mean_ms": 2.52,
+        "min_ms": 2.449,
+        "iters": 100
+      },
+      "delegation": {
+        "num_delegated_subgraphs": 1,
+        "delegated_ops": 204,
+        "non_delegated_ops": 1,
+        "fallback_op_types": {}
+      },
+      "lowering_vs_own_ref": {
+        "n": 300,
+        "max_abs_diff": 4.267692565917969e-05,
+        "mean_abs_diff": 3.95516417484032e-06,
+        "top1_agreement_pct": 100.0
+      },
+      "speedup_vs_portable": 165.42
+    },
+    "xnnpack_int8": {
+      "n": 3925,
+      "top1": 78.85350318471338,
+      "top1_agreement_vs_fp32": 90.343949044586,
+      "logit_max_abs_diff": 12.599071502685547,
+      "logit_mean_abs_diff": 0.7481157779693604,
+      "size_bytes": 3763104,
+      "latency": {
+        "p50_ms": 1.168,
+        "p90_ms": 1.201,
+        "mean_ms": 1.168,
+        "min_ms": 1.111,
+        "iters": 100
+      },
+      "delegation": {
+        "num_delegated_subgraphs": 1,
+        "delegated_ops": 365,
+        "non_delegated_ops": 1,
+        "fallback_op_types": {}
+      },
+      "lowering_vs_own_ref": {
+        "n": 300,
+        "max_abs_diff": 4.214838027954102,
+        "mean_abs_diff": 0.5265107154846191,
+        "top1_agreement_pct": 92.0
+      },
+      "speedup_vs_portable": 356.48
+    }
+  }
+}

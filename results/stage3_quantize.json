@@ -1,0 +1,337 @@
+{
+  "env": {
+    "machine": "arm64",
+    "system": "Darwin 27.0.0",
+    "processor": "arm",
+    "python": "3.11.14",
+    "cpu_count": 8,
+    "smoke": false,
+    "torch": "2.14.0",
+    "torchvision": "0.29.0",
+    "onnx": "1.23.0",
+    "onnxruntime": "1.30.0",
+    "executorch": "1.5.1",
+    "torchao": "0.18.0",
+    "qai_hub": "0.56.0",
+    "chip": "Apple M3"
+  },
+  "n_calib": 256,
+  "weight_ranges": {
+    "conv_layers": 52,
+    "depthwise_layers": 17,
+    "median_range_ratio_depthwise": 32.897125244140625,
+    "median_range_ratio_pointwise": 5.09757661819458,
+    "worst_layers": [
+      {
+        "node": "node_Conv_811",
+        "depthwise": true,
+        "channels": 32,
+        "range_ratio": 2207.470947265625,
+        "min_channel_int8_levels": 0.05753190070390701,
+        "channels_under_8_levels": 9
+      },
+      {
+        "node": "node_Conv_905",
+        "depthwise": false,
+        "channels": 960,
+        "range_ratio": 619.6326293945312,
+        "min_channel_int8_levels": 0.2049601525068283,
+        "channels_under_8_levels": 1
+      },
+      {
+        "node": "node_Conv_809",
+        "depthwise": false,
+        "channels": 32,
+        "range_ratio": 543.8238525390625,
+        "min_channel_int8_levels": 0.23353150486946106,
+        "channels_under_8_levels": 8
+      },
+      {
+        "node": "node_Conv_901",
+        "depthwise": true,
+        "channels": 960,
+        "range_ratio": 281.7846984863281,
+        "min_channel_int8_levels": 0.45069870352745056,
+        "channels_under_8_levels": 101
+      },
+      {
+        "node": "node_Conv_881",
+        "depthwise": false,
+        "channels": 576,
+        "range_ratio": 232.47021484375,
+        "min_channel_int8_levels": 0.5463064908981323,
+        "channels_under_8_levels": 7
+      },
+      {
+        "node": "node_Conv_899",
+        "depthwise": false,
+        "channels": 960,
+        "range_ratio": 229.75038146972656,
+        "min_channel_int8_levels": 0.5527738332748413,
+        "channels_under_8_levels": 4
+      }
+    ]
+  },
+  "variants": {
+    "fp32": {
+      "n": 3925,
+      "top1": 79.03184713375796,
+      "top1_agreement_vs_fp32": 100.0,
+      "logit_max_abs_diff": 5.40614128112793e-05,
+      "logit_mean_abs_diff": 2.921443410741631e-06,
+      "size_bytes": 14221535,
+      "latency_1thread": {
+        "p50_ms": 9.178,
+        "p90_ms": 9.191,
+        "mean_ms": 9.179,
+        "min_ms": 9.158,
+        "iters": 200
+      },
+      "latency_allthreads": {
+        "p50_ms": 2.938,
+        "p90_ms": 2.95,
+        "mean_ms": 2.944,
+        "min_ms": 2.927,
+        "iters": 200
+      },
+      "file_ops": {
+        "Conv": 52,
+        "Clip": 35,
+        "Add": 10,
+        "ReduceMean": 1,
+        "Reshape": 1,
+        "Gemm": 1
+      },
+      "runtime_ops": {
+        "FusedConv": 35,
+        "Conv": 17,
+        "Add": 10,
+        "ReduceMean": 1,
+        "Reshape": 1,
+        "Gemm": 1
+      },
+      "top1_delta_pp": 0.0,
+      "speedup_1thread": 1.0,
+      "speedup_allthreads": 1.0
+    },
+    "dynamic": {
+      "n": 3925,
+      "top1": 77.50318471337579,
+      "top1_agreement_vs_fp32": 89.70700636942675,
+      "logit_max_abs_diff": 9.20086669921875,
+      "logit_mean_abs_diff": 0.5703617930412292,
+      "size_bytes": 3732203,
+      "latency_1thread": {
+        "p50_ms": 12.303,
+        "p90_ms": 12.448,
+        "mean_ms": 12.329,
+        "min_ms": 12.171,
+        "iters": 200
+      },
+      "latency_allthreads": {
+        "p50_ms": 10.191,
+        "p90_ms": 10.343,
+        "mean_ms": 10.185,
+        "min_ms": 9.907,
+        "iters": 200
+      },
+      "file_ops": {
+        "Reshape": 53,
+        "DynamicQuantizeLinear": 53,
+        "Mul": 106,
+        "ConvInteger": 52,
+        "Cast": 53,
+        "Add": 63,
+        "Clip": 35,
+        "ReduceMean": 1,
+        "MatMulInteger": 1
+      },
+      "runtime_ops": {
+        "DynamicQuantizeLinear": 52,
+        "ConvInteger": 52,
+        "Cast": 52,
+        "Mul": 104,
+        "Add": 62,
+        "Clip": 35,
+        "ReduceMean": 1,
+        "Reshape": 1,
+        "DynamicQuantizeMatMul": 1
+      },
+      "top1_delta_pp": -1.529,
+      "speedup_1thread": 0.746,
+      "speedup_allthreads": 0.288
+    },
+    "static_per_tensor_minmax": {
+      "n": 3925,
+      "top1": 78.11464968152866,
+      "top1_agreement_vs_fp32": 88.28025477707007,
+      "logit_max_abs_diff": 8.778491973876953,
+      "logit_mean_abs_diff": 0.7070214152336121,
+      "size_bytes": 3792419,
+      "latency_1thread": {
+        "p50_ms": 3.123,
+        "p90_ms": 3.129,
+        "mean_ms": 3.125,
+        "min_ms": 3.117,
+        "iters": 200
+      },
+      "latency_allthreads": {
+        "p50_ms": 1.077,
+        "p90_ms": 1.081,
+        "mean_ms": 1.073,
+        "min_ms": 1.045,
+        "iters": 200
+      },
+      "file_ops": {
+        "DequantizeLinear": 171,
+        "QuantizeLinear": 65,
+        "Conv": 52,
+        "Add": 10,
+        "ReduceMean": 1,
+        "Reshape": 1,
+        "Gemm": 1
+      },
+      "runtime_ops": {
+        "QuantizeLinear": 2,
+        "QLinearConv": 52,
+        "QLinearAdd": 10,
+        "DequantizeLinear": 2,
+        "ReduceMean": 1,
+        "Reshape": 1,
+        "QGemm": 1
+      },
+      "top1_delta_pp": -0.917,
+      "speedup_1thread": 2.939,
+      "speedup_allthreads": 2.728
+    },
+    "static_per_channel_minmax": {
+      "n": 3925,
+      "top1": 78.62420382165605,
+      "top1_agreement_vs_fp32": 92.28025477707006,
+      "logit_max_abs_diff": 8.276508331298828,
+      "logit_mean_abs_diff": 0.47192853689193726,
+      "size_bytes": 4028840,
+      "latency_1thread": {
+        "p50_ms": 3.136,
+        "p90_ms": 3.142,
+        "mean_ms": 3.137,
+        "min_ms": 3.13,
+        "iters": 200
+      },
+      "latency_allthreads": {
+        "p50_ms": 1.096,
+        "p90_ms": 1.1,
+        "mean_ms": 1.095,
+        "min_ms": 1.071,
+        "iters": 200
+      },
+      "file_ops": {
+        "DequantizeLinear": 171,
+        "QuantizeLinear": 65,
+        "Conv": 52,
+        "Add": 10,
+        "ReduceMean": 1,
+        "Reshape": 1,
+        "Gemm": 1
+      },
+      "runtime_ops": {
+        "QuantizeLinear": 2,
+        "QLinearConv": 52,
+        "QLinearAdd": 10,
+        "DequantizeLinear": 2,
+        "ReduceMean": 1,
+        "Reshape": 1,
+        "QGemm": 1
+      },
+      "top1_delta_pp": -0.408,
+      "speedup_1thread": 2.927,
+      "speedup_allthreads": 2.681
+    },
+    "static_per_channel_percentile": {
+      "n": 3925,
+      "top1": 78.1656050955414,
+      "top1_agreement_vs_fp32": 92.43312101910828,
+      "logit_max_abs_diff": 11.13515853881836,
+      "logit_mean_abs_diff": 0.40790215134620667,
+      "size_bytes": 4028850,
+      "latency_1thread": {
+        "p50_ms": 3.121,
+        "p90_ms": 3.126,
+        "mean_ms": 3.122,
+        "min_ms": 3.114,
+        "iters": 200
+      },
+      "latency_allthreads": {
+        "p50_ms": 1.091,
+        "p90_ms": 1.096,
+        "mean_ms": 1.088,
+        "min_ms": 1.056,
+        "iters": 200
+      },
+      "file_ops": {
+        "DequantizeLinear": 171,
+        "QuantizeLinear": 65,
+        "Conv": 52,
+        "Add": 10,
+        "ReduceMean": 1,
+        "Reshape": 1,
+        "Gemm": 1
+      },
+      "runtime_ops": {
+        "QuantizeLinear": 2,
+        "QLinearConv": 52,
+        "QLinearAdd": 10,
+        "DequantizeLinear": 2,
+        "ReduceMean": 1,
+        "Reshape": 1,
+        "QGemm": 1
+      },
+      "top1_delta_pp": -0.866,
+      "speedup_1thread": 2.941,
+      "speedup_allthreads": 2.693
+    },
+    "static_per_channel_entropy": {
+      "n": 3925,
+      "top1": 75.36305732484077,
+      "top1_agreement_vs_fp32": 88.86624203821655,
+      "logit_max_abs_diff": 12.296625137329102,
+      "logit_mean_abs_diff": 0.5421035885810852,
+      "size_bytes": 4028830,
+      "latency_1thread": {
+        "p50_ms": 3.124,
+        "p90_ms": 3.13,
+        "mean_ms": 3.125,
+        "min_ms": 3.117,
+        "iters": 200
+      },
+      "latency_allthreads": {
+        "p50_ms": 1.091,
+        "p90_ms": 1.094,
+        "mean_ms": 1.089,
+        "min_ms": 1.056,
+        "iters": 200
+      },
+      "file_ops": {
+        "DequantizeLinear": 171,
+        "QuantizeLinear": 65,
+        "Conv": 52,
+        "Add": 10,
+        "ReduceMean": 1,
+        "Reshape": 1,
+        "Gemm": 1
+      },
+      "runtime_ops": {
+        "QuantizeLinear": 2,
+        "QLinearConv": 52,
+        "QLinearAdd": 10,
+        "DequantizeLinear": 2,
+        "ReduceMean": 1,
+        "Reshape": 1,
+        "QGemm": 1
+      },
+      "top1_delta_pp": -3.669,
+      "speedup_1thread": 2.938,
+      "speedup_allthreads": 2.693
+    }
+  }
+}
