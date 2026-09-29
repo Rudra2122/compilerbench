@@ -36,3 +36,12 @@ XNNPACK threadpool: 4 threads. Batch 1.
 | `xnnpack_fp32` | 204 / 1 (none) | 79.03% (3925) | 100.00% | 2.52 ms | 165.4x | 14.0 MB | 4.3e-05 / 4.0e-06, 100.0% |
 | `xnnpack_int8` | 365 / 1 (none) | 78.85% (3925) | 90.34% | 1.17 ms | 356.5x | 3.8 MB | 4.2e+00 / 5.3e-01, 92.0% |
 
+### Stage 5: on-device, Qualcomm AI Hub (Samsung Galaxy S24 (Family))
+
+| Variant | Inference (on-device) | Layers by compute unit | On-device top-1 (n) | fp32 top-1, same images | Agrees w/ local fp32 | Jobs |
+|---|---|---|---|---|---|---|
+| `tflite_fp32` | 0.368 ms | NPU 70 | 77.50% (200) | 77.50% | 100.00% | [compile](https://workbench.aihub.qualcomm.com/jobs/jglyd4l25/) [profile](https://workbench.aihub.qualcomm.com/jobs/j568x2wng/) [inference](https://workbench.aihub.qualcomm.com/jobs/jp4y7neqp/) |
+| `qnn_fp32` | 0.370 ms | NPU 103 | 77.50% (200) | 77.50% | 100.00% | [compile](https://workbench.aihub.qualcomm.com/jobs/jgnz40qvg/) [profile](https://workbench.aihub.qualcomm.com/jobs/jprlr6dvp/) [inference](https://workbench.aihub.qualcomm.com/jobs/jp2r1xqmg/) |
+| `qnn_int8` | 0.214 ms | NPU 105 | 77.50% (200) | 77.50% | 96.00% | [compile_onnx](https://workbench.aihub.qualcomm.com/jobs/jgk21v8vg/) [quantize](https://workbench.aihub.qualcomm.com/jobs/j5qln0vep/) [compile](https://workbench.aihub.qualcomm.com/jobs/jg9zr07vp/) [profile](https://workbench.aihub.qualcomm.com/jobs/jp1n92klg/) [inference](https://workbench.aihub.qualcomm.com/jobs/jpvl8q8m5/) |
+| `qnn_int8_qio` | 0.184 ms | NPU 103 | – | – | – | [compile](https://workbench.aihub.qualcomm.com/jobs/jgnz40jmg/) [profile](https://workbench.aihub.qualcomm.com/jobs/jprlr6zep/) |
+
